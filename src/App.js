@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Actor from './Components/Actor/Actor';
+import Cart from './Components/Cart/Cart';
 
 function App() {
+  const [actors,setActors] = useState([]);
+  useEffect(()=>{
+    fetch('./actor.JSON', {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    })
+    .then(res => res.json())
+    .then(data => setActors(data))
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='wrapper' className='row text-white'>
+      <div className='col-8 mt-5'>
+        <Actor></Actor>
+      </div>
+      <div className='col-4 mt-5'>
+        <Cart></Cart>
+      </div>
+     
     </div>
   );
 }
